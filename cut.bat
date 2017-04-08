@@ -1,0 +1,1 @@
+bin\ffmpeg.exe -sseof -20 -i live.flv -c copy -y p0.mp4

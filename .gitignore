@@ -1,1 +1,9 @@
 ff*.exe
+/dist
+/build
+/data
+*.spec
+*.gif
+*.mp4
+*.flv
+*.pyc

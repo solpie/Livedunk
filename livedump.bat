@@ -1,0 +1,1 @@
+bin\ffmpeg -i "rtmp://huputv-ws-live.arenacdn.com/prod/lM-q0M8lEOqxBJ3h" -f flv -c copy live.flv
