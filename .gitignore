@@ -1,9 +1,10 @@
 ff*.exe
 /dist
 /build
-/data
+/node_modules
 *.spec
 *.gif
 *.mp4
 *.flv
 *.pyc
+*.log
