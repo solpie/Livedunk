@@ -1,9 +1,9 @@
 # Livedunk
 livedunk
 #todo
-cpu memory info
-double last.jpg
-cache dir tree
+1.cpu memory info
+2.multi last.jpg preview
+3.cache dir tree
 -live-time
 --last.jpg
 --live.flv
