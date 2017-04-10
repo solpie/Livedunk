@@ -13,8 +13,9 @@ export default class LiveDunk {
             recBtnText: 'Record',
             recTime: 0,
             seekTime: 0,
+            lastImg: "",
             seekSection: [new Date(2016, 9, 10, 8, 40), new Date(2016, 9, 10, 9, 40)],
-            liveThumbInvert: 1,//secord
+            liveThumbInvert: 2,//secord
             //setting
             cachePath: 'C:/projects/Livedunk/cache',
             binPath: 'C:/projects/Livedunk/bin',
@@ -40,6 +41,7 @@ export default class LiveDunk {
             clearInterval(this.recTimer)
     }
     getLiveThumb() {
+        let imgPath = path.join(this.vue.cachePath, 'last.jpg')
         let params = ['-sseof',
             '-1',
             `-t`,
@@ -49,9 +51,17 @@ export default class LiveDunk {
             '-f',
             `image2`,
             `-y`,
-            path.join(this.vue.cachePath, 'last.jpg'),
+            imgPath,
         ]
         cmdCall(this.ffmpegPath, params)
+
+
+        var fs = _require("fs");
+        // let imgPath = path.join(this.vue.cachePath, 'last.jpg')
+        let prefix = "data:jpeg;base64,";
+        var imageBuf = fs.readFileSync(imgPath);
+        this.vue.lastImg = prefix + imageBuf.toString("base64")
+
     }
     startThumbTimer() {
         if (this.thumbTimer)
@@ -112,8 +122,13 @@ export default class LiveDunk {
             console.log('onCut', this.vue.time)
         }
         vue.onFrame = () => {
-            this.getLiveThumb()
-            console.log('onFrame', cmd)
+            console.log('onFrame', this.vue.time)
+            var fs = _require("fs");
+            let imgPath = path.join(this.vue.cachePath, 'last.jpg')
+            let prefix = "data:jpeg;base64,";
+            var imageBuf = fs.readFileSync(imgPath);
+            this.vue.lastImg = prefix + imageBuf.toString("base64")
+            // console.log(imageBuf.toString("base64"));
         }
     }
 }

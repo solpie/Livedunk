@@ -8,21 +8,28 @@
             <template slot="prepend">Rtmp://</template>
           </el-input>
         </div>
-        <el-button @click.native='onRecord'>{{recBtnText}}</el-button>
-        <el-button @click.native='onFrame'>Last Frame</el-button>
-        <el-input placeholder="seek"
-                  id='seekInput'
-                  v-model='seekTime'>
-          <template slot="prepend">seek time</template>
-        </el-input>
-        <el-button @click.native='onCut(null)'>cut</el-button>
-        <el-button @click.native='onCut(seekTime)'>seek cut</el-button>
-        rec time:
-        <el-lable v-text="recTime"></el-lable>
-        <el-time-picker is-range
-                        v-model="seekSection"
-                        placeholder="选择时间范围">
-        </el-time-picker>
+        <el-row>
+          <el-col :span="12">
+            <el-button @click.native='onRecord'>{{recBtnText}}</el-button>
+            <el-input placeholder="seek"
+                      id='seekInput'
+                      v-model='seekTime'>
+              <template slot="prepend">seek time</template>
+            </el-input>
+            <el-button @click.native='onCut(null)'>cut</el-button>
+            <el-button @click.native='onFrame()'>Frame</el-button>
+            <el-button @click.native='onCut(seekTime)'>seek cut</el-button>
+            
+            rec time:{{recTime}}
+            <img :src='lastImg' style='width:640px;'>
+          </el-col>
+          <el-col :span="12">
+            <el-time-picker is-range
+                            v-model="seekSection"
+                            placeholder="选择时间范围">
+            </el-time-picker>
+          </el-col>
+        </el-row>
       </el-tab-pane>
       <el-tab-pane label="Setting">
         <el-input placeholder="缓存目录"
