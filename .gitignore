@@ -1,6 +1,7 @@
 ff*.exe
 /dist
 /build
+/cache
 /node_modules
 *.spec
 *.gif

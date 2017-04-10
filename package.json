@@ -4,7 +4,7 @@
     "author": "solpie",
     "private": true,
     "scripts": {
-        "dev": "webpack-dev-server -d --inline --hot --env.dev",
+        "watch": "webpack-dev-server -d --inline --hot --env.dev",
         "start": "electron http://localhost:8010",
         "build": "rimraf dist && webpack -p --progress --hide-modules"
     },
