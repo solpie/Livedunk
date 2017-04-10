@@ -6,21 +6,32 @@ export default (cmd, params) => {
         // let child = _require('child_process')
         // var spawn = child.spawn;
     let child = _require('child_process').spawn(cmd, params);
-    console.log('cmd:', cmd, child)
+    console.log('cmd:', cmd + params.join(' '))
     var stdout = '';
     var stderr = '';
-    child.stdout.on('data', function(buf) {
-        console.log('[STR] stdout "%s"', String(buf));
-        // stdout += buf;
+    child.stdout.on('data', (buf) => {
+        let s = String(buf)
+        if (child.onData)
+            child.onData(s)
+        else
+            console.log('[STR] stdout "%s"', s);
     });
     child.stderr.on('data', function(buf) {
-        console.log('[STR] stderr "%s"', String(buf));
-        stderr += buf;
+        let s = String(buf)
+        if (child.onData)
+            child.onData(s)
+        else
+            console.log('[STR] stderr "%s"', s);
+        // stderr += buf;
     });
     child.on('close', function(code) {
-        console.log('[END] code', code);
-        console.log('[END] stdout "%s"', stdout);
-        console.log('[END] stderr "%s"', stderr);
+        if (this.onClose)
+            this.onClose(s)
+        else {
+            // console.log('[END] code', code);
+            // console.log('[END] stdout "%s"', stdout);
+            // console.log('[END] stderr "%s"', stderr);
+        }
     });
     return child
 }

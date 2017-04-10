@@ -1,24 +1,26 @@
 const _require = window['require']
-// export default (vue) => {
-//     // const execSync = _require('child_process').execSync;
-//     // let ret = execSync('electron ');
-//     console.log('electron created', this)
-// }
+    // export default (vue) => {
+    //     // const execSync = _require('child_process').execSync;
+    //     // let ret = execSync('electron ');
+    //     console.log('electron created', this)
+    // }
 const path = _require('path')
 import cmdCall from './utils/pipe.js'
+// HPF.flashStreamAddress()[0].rtmp
 export default class LiveDunk {
     data() {
         return {
             rtmpUrl: 'rtmp://huputv-ws-live.arenacdn.com/prod/0tCLrQzyieNlEAvu',
             recBtnText: 'Record',
+            recOut: '',
             recTime: 0,
             seekTime: 0,
             lastImg: "",
-            seekSection: [new Date(2016, 9, 10, 8, 40), new Date(2016, 9, 10, 9, 40)],
-            liveThumbInvert: 2,//secord
+            seekSection: [0, 0],
+            liveThumbInvert: 2, //second
             //setting
-            cachePath: 'C:/projects/Livedunk/cache',
-            binPath: 'C:/projects/Livedunk/bin',
+            cachePath: 'd:/projects/Livedunk/cache',
+            binPath: 'd:/projects/Livedunk/bin',
             value: 1
         }
     }
@@ -53,8 +55,7 @@ export default class LiveDunk {
             `-y`,
             imgPath,
         ]
-        cmdCall(this.ffmpegPath, params)
-
+        cmdCall(this.ffmpegPath, params).onData = () => {}
 
         var fs = _require("fs");
         // let imgPath = path.join(this.vue.cachePath, 'last.jpg')
@@ -98,6 +99,13 @@ export default class LiveDunk {
                     `-y`,
                 ]
                 this.recChild = cmdCall(this.ffmpegPath, params)
+                this.recChild.onData = (s) => {
+                    if (s.search('speed') > -1) {
+                        this.vue.recOut = String(s)
+
+                        // this.vue.$message(String(s)).duration = 0;
+                    }
+                }
                 this.startThumbTimer()
                 this.startRecTimer()
             }
@@ -128,7 +136,7 @@ export default class LiveDunk {
             let prefix = "data:jpeg;base64,";
             var imageBuf = fs.readFileSync(imgPath);
             this.vue.lastImg = prefix + imageBuf.toString("base64")
-            // console.log(imageBuf.toString("base64"));
+                // console.log(imageBuf.toString("base64"));
         }
     }
 }
