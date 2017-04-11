@@ -26,7 +26,7 @@ export default (cmd, params) => {
     });
     child.on('close', function(code) {
         if (this.onClose)
-            this.onClose(s)
+            this.onClose(code)
         else {
             // console.log('[END] code', code);
             // console.log('[END] stdout "%s"', stdout);

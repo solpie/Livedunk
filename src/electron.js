@@ -10,11 +10,12 @@ const path = _require('path')
 import mkdirp from "./utils/mkdirp"
 import cmdCall from './utils/pipe.js'
 import mkDate from './utils/mkDate'
+import ffmpeg from './utils/ffmpeg'
 // HPF.flashStreamAddress()[0].rtmp
 export default class LiveDunk {
     data() {
         return {
-            rtmpUrl: 'rtmp://huputv-ws-live.arenacdn.com/prod/0tCLrQzyieNlEAvu',
+            rtmpUrl: 'rtmp://huputv-ws-live.arenacdn.com/prod/sjiBrQzyHD7jEARA',
             recBtnText: 'Record',
             recOut: '',
             recTime: 0,
@@ -22,6 +23,9 @@ export default class LiveDunk {
             lastImg: "",
             seekSection: [0, 0],
             liveThumbInvert: 2, //second
+            //
+            sectionStartImg: '',
+            sectionEndImg: '',
             //setting
             cachePath: 'c:/projects/Livedunk/cache',
             binPath: 'c:/projects/Livedunk/bin',
@@ -79,6 +83,7 @@ export default class LiveDunk {
     init(vue) {
         this.vue = vue
         this.ffmpegPath = path.join(vue.binPath, 'ffmpeg.exe')
+        ffmpeg.setBinPath(this.ffmpegPath)
         vue.onRecord = () => {
             if (this.isRecord) {
                 this.isRecord = false
@@ -95,6 +100,7 @@ export default class LiveDunk {
                 let datePath = mkDate()
                 this.liveCachePath = path.join(vue.cachePath, datePath)
                 let liveFlvPath = path.join(this.liveCachePath, 'live.flv')
+                // mkdirp cut thumb
                 mkdirp(this.liveCachePath, (err) => {
                     if (!err) {
                         let params = ['-i',
@@ -138,7 +144,7 @@ export default class LiveDunk {
                 `-y`,
                 path.join(this.liveCachePath, 'cut' + time + '.mp4'),
             ]
-            
+
             cmdCall(this.ffmpegPath, params)
             console.log('onCut', this.vue.time)
         }
@@ -151,5 +157,20 @@ export default class LiveDunk {
             this.vue.lastImg = prefix + imageBuf.toString("base64")
             // console.log(imageBuf.toString("base64"));
         }
+        vue.onSeekSection = (v) => {
+            console.log(v)
+            ffmpeg.getThumb(this.liveFlvPath, this.liveCachePath, v[0], (base64Img) => {
+                vue.sectionStartImg = base64Img
+            })
+            ffmpeg.getThumb(this.liveFlvPath, this.liveCachePath, v[1], (base64Img) => {
+                vue.sectionEndImg = base64Img
+            })
+        }
+        // vue.watch = {
+        //     seekSection: (v) => {
+        //         console.log(v)
+        //     }
+        // }
+
     }
 }

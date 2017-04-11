@@ -48,8 +48,14 @@
             
             <el-slider v-model="seekSection"
                        range
-                       :max='recTime'></el-slider>
+                       :max='recTime' @click.native='onSeekSection(seekSection)'></el-slider>
           </div>
+        </el-row>
+        <el-row>
+             <img :src='sectionStartImg'
+                   style='width:50%;padding: 0px'>
+             <img :src='sectionEndImg'
+                   style='width:50%;padding: 0px'>
         </el-row>
       </el-tab-pane>
       <!--tab setting-->
