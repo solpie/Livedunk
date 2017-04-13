@@ -15,7 +15,7 @@ import ffmpeg from './utils/ffmpeg'
 export default class LiveDunk {
     data() {
         return {
-            rtmpUrl: 'rtmp://huputv-ws-live.arenacdn.com/prod/sjiBrQzyHD7jEARA',
+            rtmpUrl: 'rtmp://huputv-ws-live.arenacdn.com/prod/08l1rQzyf0dTEAhU',
             recBtnText: 'Record',
             recOut: '',
             recTime: 0,
@@ -166,11 +166,5 @@ export default class LiveDunk {
                 vue.sectionEndImg = base64Img
             })
         }
-        // vue.watch = {
-        //     seekSection: (v) => {
-        //         console.log(v)
-        //     }
-        // }
-
     }
 }
