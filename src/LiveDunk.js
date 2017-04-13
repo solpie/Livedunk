@@ -12,7 +12,7 @@ import cmdCall from './utils/pipe.js'
 import mkDate from './utils/mkDate'
 import ffmpeg from './utils/ffmpeg'
 // HPF.flashStreamAddress()[0].rtmp
-export default class LiveDunk {
+class LiveDunk {
     data() {
         return {
             rtmpUrl: 'rtmp://huputv-ws-live.arenacdn.com/prod/08l1rQzyf0dTEAhU',
@@ -168,3 +168,6 @@ export default class LiveDunk {
         }
     }
 }
+
+const liveDunk = new LiveDunk()
+export default liveDunk

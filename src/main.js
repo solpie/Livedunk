@@ -5,6 +5,9 @@ import App from './App.vue'
 
 Vue.use(ElementUI)
 
+import Comp from './Comp.vue'
+
+Vue.component('Comp', Comp)
 
 new Vue({
     el: '#app',

@@ -68,6 +68,9 @@
           </el-col>
         </el-row>
       </el-tab-pane>
+      <el-tab-pane label="Comp">
+        <Comp></Comp>
+      </el-tab-pane>
       <!--tab setting-->
       <el-tab-pane label="Setting">
         <el-input placeholder="缓存目录"
@@ -81,10 +84,7 @@
   </div>
 </template>
 <script>
-import LiveDunk from './LiveDunk.js'
-let liveDunk;
-if (window['require'])
-  liveDunk = new LiveDunk()
+import liveDunk from './LiveDunk.js'
 export default {
   data: liveDunk.data,
   created() {
