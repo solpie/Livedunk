@@ -52,7 +52,7 @@ class LiveDunk {
             clearInterval(this.recTimer)
     }
     getLiveThumb() {
-        let imgPath = path.join(this.liveCachePath, 'last.jpg')
+        let imgPath = path.join(this.thumbPath, 'last.jpg')
         let params = ['-sseof',
             '-1',
             `-t`,
@@ -80,6 +80,12 @@ class LiveDunk {
             this.getLiveThumb()
         }, this.vue.liveThumbInvert * 1000)
     }
+    get thumbPath() {
+        return path.join(this.liveCachePath, 'thumb')
+    }
+    get cutPath() {
+        return path.join(this.liveCachePath, 'cut')
+    }
     init(vue) {
         this.vue = vue
         this.ffmpegPath = path.join(vue.binPath, 'ffmpeg.exe')
@@ -100,9 +106,12 @@ class LiveDunk {
                 let datePath = mkDate()
                 this.liveCachePath = path.join(vue.cachePath, datePath)
                 let liveFlvPath = path.join(this.liveCachePath, 'live.flv')
+
                 // mkdirp cut thumb
                 mkdirp(this.liveCachePath, (err) => {
                     if (!err) {
+                        mkdirp(this.thumbPath)
+                        mkdirp(this.cutPath)
                         let params = ['-i',
                             vue.rtmpUrl,
                             `-f`,
@@ -142,7 +151,7 @@ class LiveDunk {
                 '-c',
                 `copy`,
                 `-y`,
-                path.join(this.liveCachePath, 'cut' + time + '.mp4'),
+                path.join(this.cutPath, 'cut' + time + '.mp4'),
             ]
 
             cmdCall(this.ffmpegPath, params)
