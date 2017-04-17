@@ -1,9 +1,9 @@
 const _require = window['require']
-// export default (vue) => {
-//     // const execSync = _require('child_process').execSync;
-//     // let ret = execSync('electron ');
-//     console.log('electron created', this)
-// }
+    // export default (vue) => {
+    //     // const execSync = _require('child_process').execSync;
+    //     // let ret = execSync('electron ');
+    //     console.log('electron created', this)
+    // }
 const path = _require('path')
 
 // const mkdirp = require('mkdirp');
@@ -31,21 +31,6 @@ class LiveDunk {
             cachePath: 'd:/projects/Livedunk/cache',
             binPath: 'd:/projects/Livedunk/bin',
             playerPath: 'd:/projects/Livedunk/bin',
-
-            //comp
-            tableData: [{
-                date: '2016-05-02',
-                name: '王小虎',
-            }, {
-                date: '2016-05-04',
-                name: '王小虎',
-            }, {
-                date: '2016-05-01',
-                name: '王小虎',
-            }, {
-                date: '2016-05-03',
-                name: '王小虎',
-            }]
         }
     }
     constructor() {
@@ -80,7 +65,7 @@ class LiveDunk {
             `-y`,
             imgPath,
         ]
-        cmdCall(this.ffmpegPath, params).onData = () => { }
+        cmdCall(this.ffmpegPath, params).onData = () => {}
 
         var fs = _require("fs");
         // let imgPath = path.join(this.vue.cachePath, 'last.jpg')
@@ -157,7 +142,7 @@ class LiveDunk {
             let prefix = "data:jpeg;base64,";
             var imageBuf = fs.readFileSync(imgPath);
             this.vue.lastImg = prefix + imageBuf.toString("base64")
-            // console.log(imageBuf.toString("base64"));
+                // console.log(imageBuf.toString("base64"));
         }
         vue.onSeekSection = (v) => {
             console.log(v)
@@ -177,13 +162,13 @@ class LiveDunk {
 
         }
         vue.onRefresh = () => {
-            // let cp= this.cutPath
-            // cp = 'D:/projects/Livedunk/cache/2017-4-17[20-16-33]/cut'
-            // walkDir(this.cutPath,(fileArr)=>{
-            //     console.log('fileArr',fileArr)
-            // })
-        }
-        // vue.tableData.push({date:'ddd',name:'222'})
+                // let cp= this.cutPath
+                // cp = 'D:/projects/Livedunk/cache/2017-4-17[20-16-33]/cut'
+                // walkDir(this.cutPath,(fileArr)=>{
+                //     console.log('fileArr',fileArr)
+                // })
+            }
+            // vue.tableData.push({date:'ddd',name:'222'})
     }
 }
 

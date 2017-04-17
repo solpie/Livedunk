@@ -42,23 +42,25 @@ var fs = _require('fs');
 var path = _require('path');
 export default {
     data() {
-        return liveDunk.data()
+        return {
+            tableData: []
+        }
     },
     methods: {
         onRefresh() {
             console.log('onRefresh ')
 
             // let cp= liveDunk.cutPath
-            let cp = 'D:\\projects\\Livedunk\\cache\\2017-4-17[20-16-33]\\cut'
+            let cp = 'C:/tmp/'
             let dirList = fs.readdirSync(cp);
             dirList.forEach((item) => {
                 let filename = path.join(cp, item)
                 if (fs.statSync(filename).isFile()) {
                     console.log(filename, liveDunk.vue.push, liveDunk.vue.tableData.length)
                     // liveDunk.vue.tableData.push({date:'2016-',name:filename})
-                    let t = liveDunk.vue.tableData
+                    let t = this.tableData
                     Vue.set(t, t.length, { date: '2016-', name: filename })
-                    liveDunk.vue.$forceUpdate();
+                    // liveDunk.vue.$forceUpdate();
                     // Vue.set(t,0, { date: '2016-', name: filename })
                 }
             });
