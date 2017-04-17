@@ -11,11 +11,12 @@ import mkdirp from "./utils/mkdirp"
 import cmdCall from './utils/pipe.js'
 import mkDate from './utils/mkDate'
 import ffmpeg from './utils/ffmpeg'
+import walkDir from './utils/walk'
 // HPF.flashStreamAddress()[0].rtmp
 class LiveDunk {
     data() {
         return {
-            rtmpUrl: 'rtmp://huputv-ws-live.arenacdn.com/prod/08l1rQzyf0dTEAhU',
+            rtmpUrl: "rtmp://huputv-ws-live.arenacdn.com/prod/0iQPrQzyUQ6rED4u",
             recBtnText: 'Record',
             recOut: '',
             recTime: 0,
@@ -27,9 +28,24 @@ class LiveDunk {
             sectionStartImg: '',
             sectionEndImg: '',
             //setting
-            cachePath: 'c:/projects/Livedunk/cache',
-            binPath: 'c:/projects/Livedunk/bin',
-            value: 1
+            cachePath: 'd:/projects/Livedunk/cache',
+            binPath: 'd:/projects/Livedunk/bin',
+            playerPath: 'd:/projects/Livedunk/bin',
+
+            //comp
+            tableData: [{
+                date: '2016-05-02',
+                name: '王小虎',
+            }, {
+                date: '2016-05-04',
+                name: '王小虎',
+            }, {
+                date: '2016-05-01',
+                name: '王小虎',
+            }, {
+                date: '2016-05-03',
+                name: '王小虎',
+            }]
         }
     }
     constructor() {
@@ -112,29 +128,16 @@ class LiveDunk {
                     if (!err) {
                         mkdirp(this.thumbPath)
                         mkdirp(this.cutPath)
-                        let params = ['-i',
-                            vue.rtmpUrl,
-                            `-f`,
-                            `flv`,
-                            `-c`,
-                            `copy`,
-                            liveFlvPath,
-                            `-y`,
-                        ]
-                        this.recChild = cmdCall(this.ffmpegPath, params)
-                        this.recChild.onData = (s) => {
+                        ffmpeg.rec(vue.rtmpUrl, liveFlvPath, (s) => {
                             if (s.search('speed') > -1) {
-                                this.vue.recOut = String(s)
-
-                                // this.vue.$message(String(s)).duration = 0;
+                                vue.recOut = String(s)
                             }
-                        }
+                        })
                         this.startThumbTimer()
                         this.startRecTimer()
                     }
                 });
                 this.liveFlvPath = liveFlvPath
-
             }
         }
         vue.onCut = (time) => {
@@ -142,19 +145,9 @@ class LiveDunk {
                 // bin\ffmpeg.exe -sseof -20 -i live.flv -c copy -y p0.mp4
                 time = this.vue.recTime
             }
-            let params = ['-ss',
-                time - 20,
-                `-t`,
-                `20`,
-                `-i`,
-                this.liveFlvPath,
-                '-c',
-                `copy`,
-                `-y`,
-                path.join(this.cutPath, 'cut' + time + '.mp4'),
-            ]
+            ffmpeg.cut(this.liveFlvPath, time - 20, 20, path.join(this.cutPath, 'cut' + time + '.mp4'), () => {
 
-            cmdCall(this.ffmpegPath, params)
+            })
             console.log('onCut', this.vue.time)
         }
         vue.onFrame = () => {
@@ -175,6 +168,22 @@ class LiveDunk {
                 vue.sectionEndImg = base64Img
             })
         }
+
+        //comp tab
+        vue.onPlay = () => {
+
+        }
+        vue.onComp = () => {
+
+        }
+        vue.onRefresh = () => {
+            // let cp= this.cutPath
+            // cp = 'D:/projects/Livedunk/cache/2017-4-17[20-16-33]/cut'
+            // walkDir(this.cutPath,(fileArr)=>{
+            //     console.log('fileArr',fileArr)
+            // })
+        }
+        // vue.tableData.push({date:'ddd',name:'222'})
     }
 }
 

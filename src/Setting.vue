@@ -6,11 +6,15 @@
         </el-input>
         <el-input placeholder="bin目录"
                   v-model="binPath" />
+        <el-input placeholder="播放器目录"
+                  v-model="playerPath" />
     </div>
 </template>
 <script>
 import liveDunk from './LiveDunk.js'
 export default {
-    data: liveDunk.data,
+    data(){
+    return liveDunk.data()
+  } ,
 }
 </script>

@@ -86,7 +86,9 @@
 <script>
 import liveDunk from './LiveDunk.js'
 export default {
-  data: liveDunk.data,
+  data(){
+    return liveDunk.data()
+  } ,
   created() {
     liveDunk.init(this)
   }
