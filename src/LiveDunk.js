@@ -1,9 +1,9 @@
 const _require = window['require']
-    // export default (vue) => {
-    //     // const execSync = _require('child_process').execSync;
-    //     // let ret = execSync('electron ');
-    //     console.log('electron created', this)
-    // }
+// export default (vue) => {
+//     // const execSync = _require('child_process').execSync;
+//     // let ret = execSync('electron ');
+//     console.log('electron created', this)
+// }
 const path = _require('path')
 
 // const mkdirp = require('mkdirp');
@@ -16,7 +16,7 @@ import walkDir from './utils/walk'
 class LiveDunk {
     data() {
         return {
-            rtmpUrl: "rtmp://huputv-ws-live.arenacdn.com/prod/0iQPrQzyUQ6rED4u",
+            rtmpUrl: "rtmp://huputv-ws-live.arenacdn.com/prod/nzfHrQzyieNlEAko",
             recBtnText: 'Record',
             recOut: '',
             recTime: 0,
@@ -65,7 +65,7 @@ class LiveDunk {
             `-y`,
             imgPath,
         ]
-        cmdCall(this.ffmpegPath, params).onData = () => {}
+        cmdCall(this.ffmpegPath, params).onData = () => { }
 
         var fs = _require("fs");
         // let imgPath = path.join(this.vue.cachePath, 'last.jpg')
@@ -126,11 +126,16 @@ class LiveDunk {
             }
         }
         vue.onCut = (time) => {
-            if (!time) {
-                // bin\ffmpeg.exe -sseof -20 -i live.flv -c copy -y p0.mp4
-                time = this.vue.recTime
-            }
-            ffmpeg.cut(this.liveFlvPath, time - 20, 20, path.join(this.cutPath, 'cut' + time + '.mp4'), () => {
+            // if (!time) {
+            //     // bin\ffmpeg.exe -sseof -20 -i live.flv -c copy -y p0.mp4
+            //     time = this.vue.recTime
+            // }
+            let outPath;
+            if (time)
+                outPath = path.join(this.cutPath, 'cut' + time + '.mp4')
+            else
+                outPath = path.join(this.cutPath, 'cut^' + this.vue.recTime + '.mp4')
+            ffmpeg.cut(this.liveFlvPath, time, 20, outPath, () => {
 
             })
             console.log('onCut', this.vue.time)
@@ -142,7 +147,7 @@ class LiveDunk {
             let prefix = "data:jpeg;base64,";
             var imageBuf = fs.readFileSync(imgPath);
             this.vue.lastImg = prefix + imageBuf.toString("base64")
-                // console.log(imageBuf.toString("base64"));
+            // console.log(imageBuf.toString("base64"));
         }
         vue.onSeekSection = (v) => {
             console.log(v)
@@ -162,13 +167,13 @@ class LiveDunk {
 
         }
         vue.onRefresh = () => {
-                // let cp= this.cutPath
-                // cp = 'D:/projects/Livedunk/cache/2017-4-17[20-16-33]/cut'
-                // walkDir(this.cutPath,(fileArr)=>{
-                //     console.log('fileArr',fileArr)
-                // })
-            }
-            // vue.tableData.push({date:'ddd',name:'222'})
+            // let cp= this.cutPath
+            // cp = 'D:/projects/Livedunk/cache/2017-4-17[20-16-33]/cut'
+            // walkDir(this.cutPath,(fileArr)=>{
+            //     console.log('fileArr',fileArr)
+            // })
+        }
+        // vue.tableData.push({date:'ddd',name:'222'})
     }
 }
 

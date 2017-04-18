@@ -51,19 +51,32 @@ ffmpeg.rec = (rtmpUrl, cachePath, onData) => {
     }
     return c
 }
+function cutLast(inputPath, duration, outPath, callback) {
 
+}
 ffmpeg.cut = (inputPath, seek, duration, outputPath, callback) => {
-    let params = ['-ss', seek,
-        `-t`, duration,
-        `-i`, inputPath,
-        '-c', `copy`,
-        `-y`,
-        outputPath,
-    ]
+    let params;
+    if (seek)
+        params = ['-ss', seek,
+            `-t`, duration,
+            `-i`, inputPath,
+            '-c', `copy`,
+            `-y`,
+            outputPath,
+        ]
+    else
+        params = ['-sseof', '-' + duration,
+            '-t', duration,
+            '-i', inputPath,
+            '-c', 'copy',
+            '-y',
+            outputPath]
+
     let c = cmdCall(ffmpeg.path, params)
     c.onClose = (code) => {
-        callback(code==1)
+        callback(code == 1)
     }
 }
+
 
 export default ffmpeg
