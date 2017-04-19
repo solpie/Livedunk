@@ -73,12 +73,7 @@
       </el-tab-pane>
       <!--tab setting-->
       <el-tab-pane label="Setting">
-        <el-input placeholder="缓存目录"
-                  v-model="cachePath">
-          <el-button slot="append">...</el-button>
-        </el-input>
-        <el-input placeholder="bin目录"
-                  v-model="binPath" />
+        <Setting></Setting>
       </el-tab-pane>
     </el-tabs>
   </div>

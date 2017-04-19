@@ -6,8 +6,10 @@ import App from './App.vue'
 Vue.use(ElementUI)
 
 import Comp from './Comp.vue'
-
 Vue.component('Comp', Comp)
+
+import Setting from './Setting.vue'
+Vue.component('Setting',Setting)
 
 new Vue({
     el: '#app',

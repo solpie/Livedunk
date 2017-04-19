@@ -31,6 +31,7 @@ class LiveDunk {
             cachePath: 'd:/projects/Livedunk/cache',
             binPath: 'd:/projects/Livedunk/bin',
             playerPath: 'd:/projects/Livedunk/bin',
+            obsPlaybackPath: 'd:/projects/Livedunk/cache/playback.mov',
         }
     }
     constructor() {
