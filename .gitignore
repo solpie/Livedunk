@@ -1,5 +1,4 @@
 ff*.exe
-/dist
 /build
 /cache
 /node_modules
