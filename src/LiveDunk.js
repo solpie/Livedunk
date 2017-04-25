@@ -126,16 +126,20 @@ class LiveDunk {
                 this.liveFlvPath = liveFlvPath
             }
         }
-        vue.onCut = (time) => {
+        vue.onCut = (time, isEnd) => {
             // if (!time) {
             //     // bin\ffmpeg.exe -sseof -20 -i live.flv -c copy -y p0.mp4
             //     time = this.vue.recTime
             // }
             let outPath;
-            if (time)
+            if (!isEnd)
                 outPath = path.join(this.cutPath, 'cut' + time + '.mp4')
-            else
-                outPath = path.join(this.cutPath, 'cut^' + this.vue.recTime + '.mp4')
+            else {
+                let t = time
+                if (!t)
+                    t = this.vue.recTime
+                outPath = path.join(this.cutPath, 'cut^' + t + '.mp4')
+            }
             ffmpeg.cut(this.liveFlvPath, time, 20, outPath, () => {
 
             })

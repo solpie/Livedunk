@@ -13,7 +13,7 @@
         <el-row>
           <el-col :span="12">
             <el-button @click.native='onRecord'>{{recBtnText}}</el-button>
-            <el-button @click.native='onCut(null)'>cut</el-button>
+            <el-button @click.native='onCut(null,false)'>cut</el-button>
             <el-button @click.native='onFrame()'>Frame</el-button>
             rec time:{{recTime}}
             <el-card class="box-card"
@@ -45,7 +45,8 @@
               <template slot="prepend">Live time</template>
   
             </el-input>
-            <el-button @click.native='onCut(seekTime)'>seek cut</el-button>
+            <el-button @click.native='onCut(seekTime,false)'>seek cut</el-button>
+            <el-button @click.native='onCut(seekTime,true)'>^cut</el-button>
   
             <el-slider v-model="seekSection"
                        range
