@@ -13,7 +13,7 @@
         <el-row>
           <el-col :span="12">
             <el-button @click.native='onRecord'>{{recBtnText}}</el-button>
-            <el-button @click.native='onCut(null,false)'>cut</el-button>
+            <el-button @click.native='onCut(recTime,false)'>cut</el-button>
             <el-button @click.native='onFrame()'>Frame</el-button>
             rec time:{{recTime}}
             <el-card class="box-card"
